@@ -1,0 +1,20 @@
+{
+  "extends": "airbnb",
+  "rules": {
+    "comma-dangle": 0,
+    "no-param-reassign": 1,
+    "arrow-parens": 0,
+    "no-plusplus": 0,
+    "react/require-extension": "off",
+    "comma-spacing": [1, {
+      "before": false,
+      "after": true
+    }]
+  },
+  "globals": {
+    "document": true,
+    "window": true,
+    "navigator": true,
+    "localStorage": true
+  }
+}
