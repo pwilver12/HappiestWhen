@@ -6,6 +6,7 @@ import browserSyncModule from 'browser-sync';
 import del from 'del';
 import source from 'vinyl-source-stream';
 import buffer from 'vinyl-buffer';
+import ftp from 'vinyl-ftp';
 
 const $$ = gulpLoadPluginsModule();
 const browserSync = browserSyncModule.create();
@@ -90,6 +91,24 @@ gulp.task('serve', () => {
   gulp.watch(paths.src.sass, ['sass']);
   gulp.watch(paths.src.js, ['js']);
   gulp.watch(paths.src.html, ['ejs', 'html']);
+});
+
+gulp.task('deploy', () => {
+  const conn = ftp.create({
+    host: 'ftp.hubapi.com',
+    user: FTP_HW_USERNAME,
+    password: FTP_HW_PASSWORD,
+    port: 3200,
+    secure: true
+  });
+
+  const globs = [
+    'build/css/**',
+    'build/js/**'
+  ];
+
+  return gulp.src(globs, { buffer: false })
+    .pipe(conn.dest(process.env.FTP_HW_PATH));
 });
 
 // The default task (called when you run `gulp` from cli)
